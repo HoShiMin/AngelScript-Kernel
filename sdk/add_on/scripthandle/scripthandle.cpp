@@ -222,7 +222,7 @@ void CScriptHandle::EnumReferences(asIScriptEngine *inEngine)
 		inEngine->GCEnumCallback(m_type);
 }
 
-void CScriptHandle::ReleaseReferences(asIScriptEngine *inEngine)
+void CScriptHandle::ReleaseReferences(asIScriptEngine *)
 {
 	// Simply clear the content to release the references
 	Set(0, 0);

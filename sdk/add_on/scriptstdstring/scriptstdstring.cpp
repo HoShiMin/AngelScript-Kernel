@@ -1,12 +1,8 @@
 #include "scriptstdstring.h"
 #include <assert.h> // assert()
-#include <sstream>  // std::stringstream
 #include <string.h> // strstr()
 #include <stdio.h>	// sprintf()
 #include <stdlib.h> // strtod()
-#ifndef __psp2__
-	#include <locale.h> // setlocale()
-#endif
 
 using namespace std;
 
@@ -181,152 +177,112 @@ static bool StringIsEmpty(const string &str)
 
 static string &AssignUInt64ToString(asQWORD i, string &dest)
 {
-	ostringstream stream;
-	stream << i;
-	dest = stream.str();
+	dest = std::to_string(i);
 	return dest;
 }
 
 static string &AddAssignUInt64ToString(asQWORD i, string &dest)
 {
-	ostringstream stream;
-	stream << i;
-	dest += stream.str();
+	dest += std::to_string(i);
 	return dest;
 }
 
 static string AddStringUInt64(const string &str, asQWORD i)
 {
-	ostringstream stream;
-	stream << i;
-	return str + stream.str();
+	return str + std::to_string(i);
 }
 
 static string AddInt64String(asINT64 i, const string &str)
 {
-	ostringstream stream;
-	stream << i;
-	return stream.str() + str;
+	return std::to_string(i) + str;
 }
 
 static string &AssignInt64ToString(asINT64 i, string &dest)
 {
-	ostringstream stream;
-	stream << i;
-	dest = stream.str();
+	dest = std::to_string(i);
 	return dest;
 }
 
 static string &AddAssignInt64ToString(asINT64 i, string &dest)
 {
-	ostringstream stream;
-	stream << i;
-	dest += stream.str();
+	dest += std::to_string(i);
 	return dest;
 }
 
 static string AddStringInt64(const string &str, asINT64 i)
 {
-	ostringstream stream;
-	stream << i;
-	return str + stream.str();
+	return str + std::to_string(i);
 }
 
 static string AddUInt64String(asQWORD i, const string &str)
 {
-	ostringstream stream;
-	stream << i;
-	return stream.str() + str;
+	return std::to_string(i) + str;
 }
 
 static string &AssignDoubleToString(double f, string &dest)
 {
-	ostringstream stream;
-	stream << f;
-	dest = stream.str();
+	dest = std::to_string(f);
 	return dest;
 }
 
 static string &AddAssignDoubleToString(double f, string &dest)
 {
-	ostringstream stream;
-	stream << f;
-	dest += stream.str();
+	dest += std::to_string(f);
 	return dest;
 }
 
 static string &AssignFloatToString(float f, string &dest)
 {
-	ostringstream stream;
-	stream << f;
-	dest = stream.str();
+	dest = std::to_string(f);
 	return dest;
 }
 
 static string &AddAssignFloatToString(float f, string &dest)
 {
-	ostringstream stream;
-	stream << f;
-	dest += stream.str();
+	dest += std::to_string(f);
 	return dest;
 }
 
 static string &AssignBoolToString(bool b, string &dest)
 {
-	ostringstream stream;
-	stream << (b ? "true" : "false");
-	dest = stream.str();
+	dest = (b ? "true" : "false");
 	return dest;
 }
 
 static string &AddAssignBoolToString(bool b, string &dest)
 {
-	ostringstream stream;
-	stream << (b ? "true" : "false");
-	dest += stream.str();
+	dest += (b ? "true" : "false");
 	return dest;
 }
 
 static string AddStringDouble(const string &str, double f)
 {
-	ostringstream stream;
-	stream << f;
-	return str + stream.str();
+	return str + std::to_string(f);
 }
 
 static string AddDoubleString(double f, const string &str)
 {
-	ostringstream stream;
-	stream << f;
-	return stream.str() + str;
+	return std::to_string(f) + str;
 }
 
 static string AddStringFloat(const string &str, float f)
 {
-	ostringstream stream;
-	stream << f;
-	return str + stream.str();
+	return str + std::to_string(f);
 }
 
 static string AddFloatString(float f, const string &str)
 {
-	ostringstream stream;
-	stream << f;
-	return stream.str() + str;
+	return std::to_string(f) + str;
 }
 
 static string AddStringBool(const string &str, bool b)
 {
-	ostringstream stream;
-	stream << (b ? "true" : "false");
-	return str + stream.str();
+	return str + (b ? "true" : "false");
 }
 
 static string AddBoolString(bool b, const string &str)
 {
-	ostringstream stream;
-	stream << (b ? "true" : "false");
-	return stream.str() + str;
+	return (b ? "true" : "false") + str;
 }
 
 static char *StringCharAt(unsigned int i, string &str)
@@ -363,7 +319,7 @@ static int StringCmp(const string &a, const string &b)
 static int StringFindFirst(const string &sub, asUINT start, const string &str)
 {
 	// We don't register the method directly because the argument types change between 32bit and 64bit platforms
-	return (int)str.find(sub, (size_t)(start < 0 ? string::npos : start));
+	return (int)str.find(sub, start);
 }
 
 // This function returns the index of the first position where the one of the bytes in substring
@@ -375,7 +331,7 @@ static int StringFindFirst(const string &sub, asUINT start, const string &str)
 static int StringFindFirstOf(const string &sub, asUINT start, const string &str)
 {
 	// We don't register the method directly because the argument types change between 32bit and 64bit platforms
-	return (int)str.find_first_of(sub, (size_t)(start < 0 ? string::npos : start));
+	return (int)str.find_first_of(sub, start);
 }
 
 // This function returns the index of the last position where the one of the bytes in substring
@@ -387,7 +343,7 @@ static int StringFindFirstOf(const string &sub, asUINT start, const string &str)
 static int StringFindLastOf(const string &sub, asUINT start, const string &str)
 {
 	// We don't register the method directly because the argument types change between 32bit and 64bit platforms
-	return (int)str.find_last_of(sub, (size_t)(start < 0 ? string::npos : start));
+	return (int)str.find_last_of(sub, start);
 }
 
 // This function returns the index of the first position where a byte other than those in substring
@@ -398,7 +354,7 @@ static int StringFindLastOf(const string &sub, asUINT start, const string &str)
 static int StringFindFirstNotOf(const string &sub, asUINT start, const string &str)
 {
 	// We don't register the method directly because the argument types change between 32bit and 64bit platforms
-	return (int)str.find_first_not_of(sub, (size_t)(start < 0 ? string::npos : start));
+	return (int)str.find_first_not_of(sub, start);
 }
 
 // This function returns the index of the last position where a byte other than those in substring
@@ -409,7 +365,7 @@ static int StringFindFirstNotOf(const string &sub, asUINT start, const string &s
 static int StringFindLastNotOf(const string &sub, asUINT start, const string &str)
 {
 	// We don't register the method directly because the argument types change between 32bit and 64bit platforms
-	return (int)str.find_last_not_of(sub, (size_t)(start < 0 ? string::npos : start));
+	return (int)str.find_last_not_of(sub, start);
 }
 
 // This function returns the index of the last position where the substring
@@ -689,22 +645,7 @@ double parseFloat(const string &val, asUINT *byteCount)
 {
 	char *end;
 
-	// WinCE doesn't have setlocale. Some quick testing on my current platform
-	// still manages to parse the numbers such as "3.14" even if the decimal for the
-	// locale is ",".
-#if !defined(_WIN32_WCE) && !defined(ANDROID) && !defined(__psp2__)
-	// Set the locale to C so that we are guaranteed to parse the float value correctly
-	char *tmp = setlocale(LC_NUMERIC, 0);
-	string orig = tmp ? tmp : "C";
-	setlocale(LC_NUMERIC, "C");
-#endif
-
 	double res = strtod(val.c_str(), &end);
-
-#if !defined(_WIN32_WCE) && !defined(ANDROID) && !defined(__psp2__)
-	// Restore the locale
-	setlocale(LC_NUMERIC, orig.c_str());
-#endif
 
 	if( byteCount )
 		*byteCount = asUINT(size_t(end - val.c_str()));
@@ -1062,9 +1003,7 @@ static void AssignInt2StringGeneric(asIScriptGeneric *gen)
 {
 	asINT64 *a = static_cast<asINT64*>(gen->GetAddressOfArg(0));
 	string *self = static_cast<string*>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self = sstr.str();
+	*self = std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1072,9 +1011,7 @@ static void AssignUInt2StringGeneric(asIScriptGeneric *gen)
 {
 	asQWORD *a = static_cast<asQWORD*>(gen->GetAddressOfArg(0));
 	string *self = static_cast<string*>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self = sstr.str();
+	*self = std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1082,9 +1019,7 @@ static void AssignDouble2StringGeneric(asIScriptGeneric *gen)
 {
 	double *a = static_cast<double*>(gen->GetAddressOfArg(0));
 	string *self = static_cast<string*>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self = sstr.str();
+	*self = std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1092,9 +1027,7 @@ static void AssignFloat2StringGeneric(asIScriptGeneric *gen)
 {
 	float *a = static_cast<float*>(gen->GetAddressOfArg(0));
 	string *self = static_cast<string*>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self = sstr.str();
+	*self = std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1102,9 +1035,7 @@ static void AssignBool2StringGeneric(asIScriptGeneric *gen)
 {
 	bool *a = static_cast<bool*>(gen->GetAddressOfArg(0));
 	string *self = static_cast<string*>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << (*a ? "true" : "false");
-	*self = sstr.str();
+	*self = (*a ? "true" : "false");
 	gen->SetReturnAddress(self);
 }
 
@@ -1112,9 +1043,7 @@ static void AddAssignDouble2StringGeneric(asIScriptGeneric * gen)
 {
 	double * a = static_cast<double *>(gen->GetAddressOfArg(0));
 	string * self = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self += sstr.str();
+	*self += std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1122,9 +1051,7 @@ static void AddAssignFloat2StringGeneric(asIScriptGeneric * gen)
 {
 	float * a = static_cast<float *>(gen->GetAddressOfArg(0));
 	string * self = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self += sstr.str();
+	*self += std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1132,9 +1059,7 @@ static void AddAssignInt2StringGeneric(asIScriptGeneric * gen)
 {
 	asINT64 * a = static_cast<asINT64 *>(gen->GetAddressOfArg(0));
 	string * self = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self += sstr.str();
+	*self += std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1142,9 +1067,7 @@ static void AddAssignUInt2StringGeneric(asIScriptGeneric * gen)
 {
 	asQWORD * a = static_cast<asQWORD *>(gen->GetAddressOfArg(0));
 	string * self = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a;
-	*self += sstr.str();
+	*self += std::to_string(*a);
 	gen->SetReturnAddress(self);
 }
 
@@ -1152,9 +1075,7 @@ static void AddAssignBool2StringGeneric(asIScriptGeneric * gen)
 {
 	bool * a = static_cast<bool *>(gen->GetAddressOfArg(0));
 	string * self = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << (*a ? "true" : "false");
-	*self += sstr.str();
+	*self += (*a ? "true" : "false");
 	gen->SetReturnAddress(self);
 }
 
@@ -1162,9 +1083,7 @@ static void AddString2DoubleGeneric(asIScriptGeneric * gen)
 {
 	string * a = static_cast<string *>(gen->GetObject());
 	double * b = static_cast<double *>(gen->GetAddressOfArg(0));
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = *a + std::to_string(*b);
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1172,9 +1091,7 @@ static void AddString2FloatGeneric(asIScriptGeneric * gen)
 {
 	string * a = static_cast<string *>(gen->GetObject());
 	float * b = static_cast<float *>(gen->GetAddressOfArg(0));
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = *a + std::to_string(*b);
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1182,9 +1099,7 @@ static void AddString2IntGeneric(asIScriptGeneric * gen)
 {
 	string * a = static_cast<string *>(gen->GetObject());
 	asINT64 * b = static_cast<asINT64 *>(gen->GetAddressOfArg(0));
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = *a + std::to_string(*b);
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1192,9 +1107,7 @@ static void AddString2UIntGeneric(asIScriptGeneric * gen)
 {
 	string * a = static_cast<string *>(gen->GetObject());
 	asQWORD * b = static_cast<asQWORD *>(gen->GetAddressOfArg(0));
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = *a + std::to_string(*b);
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1202,9 +1115,7 @@ static void AddString2BoolGeneric(asIScriptGeneric * gen)
 {
 	string * a = static_cast<string *>(gen->GetObject());
 	bool * b = static_cast<bool *>(gen->GetAddressOfArg(0));
-	std::stringstream sstr;
-	sstr << *a << (*b ? "true" : "false");
-	std::string ret_val = sstr.str();
+	std::string ret_val = *a + (*b ? "true" : "false");
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1212,9 +1123,7 @@ static void AddDouble2StringGeneric(asIScriptGeneric * gen)
 {
 	double* a = static_cast<double *>(gen->GetAddressOfArg(0));
 	string * b = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = std::to_string(*a) + *b;
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1222,9 +1131,7 @@ static void AddFloat2StringGeneric(asIScriptGeneric * gen)
 {
 	float* a = static_cast<float *>(gen->GetAddressOfArg(0));
 	string * b = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = std::to_string(*a) + *b;
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1232,9 +1139,7 @@ static void AddInt2StringGeneric(asIScriptGeneric * gen)
 {
 	asINT64* a = static_cast<asINT64 *>(gen->GetAddressOfArg(0));
 	string * b = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = std::to_string(*a) + *b;
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1242,9 +1147,7 @@ static void AddUInt2StringGeneric(asIScriptGeneric * gen)
 {
 	asQWORD* a = static_cast<asQWORD *>(gen->GetAddressOfArg(0));
 	string * b = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << *a << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = std::to_string(*a) + *b;
 	gen->SetReturnObject(&ret_val);
 }
 
@@ -1252,9 +1155,7 @@ static void AddBool2StringGeneric(asIScriptGeneric * gen)
 {
 	bool* a = static_cast<bool *>(gen->GetAddressOfArg(0));
 	string * b = static_cast<string *>(gen->GetObject());
-	std::stringstream sstr;
-	sstr << (*a ? "true" : "false") << *b;
-	std::string ret_val = sstr.str();
+	std::string ret_val = (*a ? "true" : "false") + *b;
 	gen->SetReturnObject(&ret_val);
 }
 

@@ -34,21 +34,21 @@ static CScriptArray *StringSplit(const string &delim, const string &str)
 	CScriptArray *array = CScriptArray::Create(arrayType);
 
 	// Find the existence of the delimiter in the input string
-	int pos = 0, prev = 0, count = 0;
-	while( (pos = (int)str.find(delim, prev)) != (int)string::npos )
+	size_t pos = 0, prev = 0, count = 0;
+	while( (pos = str.find(delim, prev)) != string::npos )
 	{
 		// Add the part to the array
 		array->Resize(array->GetSize()+1);
-		((string*)array->At(count))->assign(&str[prev], pos-prev);
+		((string*)array->At(static_cast<asUINT>(count)))->assign(&str[prev], pos-prev);
 
 		// Find the next part
 		count++;
-		prev = pos + (int)delim.length();
+		prev = pos + delim.length();
 	}
 
 	// Add the remaining part
 	array->Resize(array->GetSize()+1);
-	((string*)array->At(count))->assign(&str[prev]);
+	((string*)array->At(static_cast<asUINT>(count)))->assign(&str[prev]);
 
 	return array;
 }

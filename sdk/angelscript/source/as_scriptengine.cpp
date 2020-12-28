@@ -6338,6 +6338,9 @@ void asCScriptEngine::SetScriptObjectUserDataCleanupCallback(asCLEANSCRIPTOBJECT
 int asCScriptEngine::SetTranslateAppExceptionCallback(asSFuncPtr callback, void *param, int callConv)
 {
 #ifdef AS_NO_EXCEPTIONS
+	callback;
+	param;
+	callConv;
 	return asNOT_SUPPORTED;
 #else
 	if (callback.ptr.f.func == 0)

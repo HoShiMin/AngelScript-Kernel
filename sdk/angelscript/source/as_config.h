@@ -39,7 +39,8 @@
 #ifndef AS_CONFIG_H
 #define AS_CONFIG_H
 
-
+#define AS_NO_THREADS
+#define AS_NO_EXCEPTIONS
 
 //
 // Features
